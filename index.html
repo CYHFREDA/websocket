@@ -7,6 +7,10 @@
 </head>
 <body>
     <h1>WebSocket 客戶端</h1>
+    <input type="text" id="messageInput" placeholder="輸入訊息" />
+    <button id="sendButton">發送訊息</button>
+    <div id="messages"></div>
+
     <script>
         const socket = new WebSocket('ws://localhost:8080/ws/');  // 確保這裡的地址正確
 
@@ -17,6 +21,8 @@
 
         socket.onmessage = function(event) {
             console.log('Message from server:', event.data);
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML += `<p>Server: ${event.data}</p>`;
         };
 
         socket.onclose = function(event) {
@@ -25,6 +31,19 @@
 
         socket.onerror = function(error) {
             console.error('WebSocket error:', error);
+        };
+
+        // 發送訊息的功能
+        document.getElementById('sendButton').onclick = function() {
+            const input = document.getElementById('messageInput');
+            const message = input.value;
+            if (message) {
+                socket.send(message);
+                console.log('Message sent to server:', message);
+                input.value = '';  // 清空輸入框
+            } else {
+                console.error('Please enter a message to send.');
+            }
         };
     </script>
 </body>
