@@ -1,29 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>WebSocket 客戶端測試</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket 客戶端</title>
 </head>
 <body>
-    <h2>WebSocket 測試</h2>
-    <button onclick="connect()">連接 WebSocket</button>
-    <button onclick="sendMessage()">傳送訊息</button>
+    <h1>WebSocket 客戶端</h1>
     <script>
-        let ws;
-        function connect() {
-            ws = new WebSocket('ws://localhost/ws/');
-            ws.onopen = () => console.log('已連接至 WebSocket 伺服器');
-            ws.onmessage = (event) => console.log('收到伺服器訊息:', event.data);
-            ws.onclose = () => console.log('WebSocket 連線已關閉');
-        }
+        const socket = new WebSocket('ws://localhost/ws/');  // 確保這裡的地址正確
 
-        function sendMessage() {
-            if (ws && ws.readyState === WebSocket.OPEN) {
-                ws.send('Hello WebSocket!');
-            } else {
-                console.log('WebSocket 尚未連接');
-            }
-        }
+        socket.onopen = function(event) {
+            console.log('WebSocket is connected.');
+            socket.send('Hello from the browser!');
+        };
+
+        socket.onmessage = function(event) {
+            console.log('Message from server:', event.data);
+        };
+
+        socket.onclose = function(event) {
+            console.log('WebSocket connection closed:', event);
+        };
+
+        socket.onerror = function(error) {
+            console.error('WebSocket error:', error);
+        };
     </script>
 </body>
 </html>
