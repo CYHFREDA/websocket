@@ -14,7 +14,7 @@ services:
 
   websocket-service:
     build:
-      context: ./websocket-server
+      context: .
     container_name: websocket-service
     command: node server.js
     ports:
