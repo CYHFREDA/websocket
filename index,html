@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket 測試</title>
+</head>
+<body>
+    <h2>WebSocket 測試</h2>
+    <button onclick="connect()">連接</button>
+    <button onclick="sendMessage()">傳送訊息</button>
+    <script>
+        let ws;
+
+        function connect() {
+            ws = new WebSocket('ws://localhost:8080');
+            ws.onopen = () => console.log('已連接至 WebSocket 伺服器');
+            ws.onmessage = (event) => console.log('伺服器回應：', event.data);
+            ws.onclose = () => console.log('WebSocket 連接已關閉');
+        }
+
+        function sendMessage() {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send('Hello WebSocket!');
+            } else {
+                console.log('WebSocket 尚未連接');
+            }
+        }
+    </script>
+</body>
+</html>
