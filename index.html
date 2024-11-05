@@ -8,7 +8,7 @@
 <body>
     <h1>WebSocket 客戶端</h1>
     <script>
-        const socket = new WebSocket('wss://nginx/ws/');  // 確保這裡的地址正確
+        const socket = new WebSocket('wss://localhost:8080/ws/');  // 確保這裡的地址正確
 
         socket.onopen = function(event) {
             console.log('WebSocket is connected.');
