@@ -1,0 +1,15 @@
+{
+    "name": "websocket-app",
+    "version": "1.0.0",
+    "description": "A simple WebSocket server",
+    "main": "websocket.js",
+    "scripts": {
+      "start": "node websocket.js"
+    },
+    "dependencies": {
+      "ws": "^8.0.0"
+    },
+    "author": "Your Name",
+    "license": "ISC"
+  }
+  
