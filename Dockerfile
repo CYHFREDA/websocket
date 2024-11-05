@@ -1,4 +1,4 @@
 FROM node:16
 WORKDIR /app
-COPY server.js .
-CMD ["node", "server.js"]
+COPY websocket.js .
+CMD ["node", "websocket.js"]

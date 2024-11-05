@@ -16,6 +16,6 @@ services:
     build:
       context: .
     container_name: websocket-service
-    command: node server.js
+    command: node websocket.js
     ports:
       - "8080:8080"
