@@ -3,41 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSocket 客戶端</title>
+    <title>聊天室</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #messages {
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: scroll;
+            padding: 10px;
+        }
+        #messageInput {
+            width: 80%;
+        }
+    </style>
 </head>
 <body>
-    <h1>WebSocket 客戶端</h1>
+    <h1>WebSocket 聊天室</h1>
+    <div id="messages"></div>
     <input type="text" id="messageInput" placeholder="輸入訊息" />
     <button id="sendButton">發送訊息</button>
-    <div id="messages"></div>
 
     <script>
-        const socket = new WebSocket('ws://192.168.61.16/ws/');  // 確保這裡的地址正確
+        const socket = new WebSocket('ws://192.168.61.16:8080');  // 請確保這裡的地址正確
 
         socket.onopen = function(event) {
-            console.log('WebSocket is connected.');
-            socket.send('Hello from the browser!');
+            console.log('WebSocket 連接已建立。');
         };
-        
+
         socket.onmessage = function(event) {
-            console.log('Message from server:', event.data);
+            console.log('來自伺服器的消息：', event.data);
             const messagesDiv = document.getElementById('messages');
-            messagesDiv.innerHTML += `<p>Server: ${event.data}</p>`;
+            messagesDiv.innerHTML += `<p>${event.data}</p>`;
+            messagesDiv.scrollTop = messagesDiv.scrollHeight; // 滾動到最新消息
         };
-        
-        socket.onmessage = function(event) {
-            console.log('Message from server:', event.data);
-                if (event.data === 'ping') {
-                socket.send('pong'); // 回應 pong
-                }
-        };
-        
+
         socket.onclose = function(event) {
-            console.log('WebSocket connection closed:', event);
+            console.log('WebSocket 連接已關閉：', event);
         };
 
         socket.onerror = function(error) {
-            console.error('WebSocket error:', error);
+            console.error('WebSocket 錯誤：', error);
         };
 
         // 發送訊息的功能
@@ -45,11 +52,11 @@
             const input = document.getElementById('messageInput');
             const message = input.value;
             if (message) {
-                socket.send(message);
-                console.log('Message sent to server:', message);
+                socket.send(message); // 發送消息
+                console.log('發送消息到伺服器：', message);
                 input.value = '';  // 清空輸入框
             } else {
-                console.error('Please enter a message to send.');
+                console.error('請輸入要發送的消息。');
             }
         };
     </script>
