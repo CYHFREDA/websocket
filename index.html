@@ -18,13 +18,20 @@
             console.log('WebSocket is connected.');
             socket.send('Hello from the browser!');
         };
-
+        
         socket.onmessage = function(event) {
             console.log('Message from server:', event.data);
             const messagesDiv = document.getElementById('messages');
             messagesDiv.innerHTML += `<p>Server: ${event.data}</p>`;
         };
-
+        
+        socket.onmessage = function(event) {
+            console.log('Message from server:', event.data);
+                if (event.data === 'ping') {
+                socket.send('pong'); // 回應 pong
+                }
+        };
+        
         socket.onclose = function(event) {
             console.log('WebSocket connection closed:', event);
         };
